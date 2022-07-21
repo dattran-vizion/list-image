@@ -12,21 +12,21 @@ import {
 
 const imageUrls = [
   "/img1.jpg",
+  "/img2.jpg",
+  "/img3.jpg",
+  "/img4.jpg",
+  "/img5.jpg",
   "/img6.jpg",
-  "/img1.jpg",
-  "/img6.jpg",
-  "/img1.jpg",
-  "/img6.jpg",
-  "/img1.jpg",
-  "/img6.jpg",
-  "/img1.jpg",
-  "/img6.jpg",
-  "/img1.jpg",
-  "/img6.jpg",
-  "/img1.jpg",
-  "/img6.jpg",
-  "/img1.jpg",
-  "/img6.jpg",
+  "/img7.jpg",
+  "/img8.jpg",
+  "/img9.jpg",
+  "/img10.jpg",
+  "/img11.jpg",
+  "/img12.jpg",
+  "/img13.jpg",
+  "/img14.jpg",
+  "/img15.jpg",
+  "/img16.jpg",
 ];
 
 function getRandomArbitrary(min, max) {
@@ -232,20 +232,21 @@ function createLayoutRegister(imgUrlsLength, layoutManagement) {
     while (imgUrlsLength >= value) {
       imgUrlsLength -= value;
       layoutRegister.push([key, value]);
+      // layoutRegister.push([key]);
     }
   });
   // Shuffle the array layout
   shuffleArray(layoutRegister);
-  // return Object.fromEntries(layoutRegister);
   return layoutRegister;
 }
 
-// function chooseImagesForLayout(arrImages, numOfImages) {
-//   const imagesArr = [...arrImages];
-//   const shuffledImagesArr = imagesArr.sort(() => 0.5 - Math.random()); // Shuffle the images
-//   const images = shuffledImagesArr.slice(0, numOfImages); // Take the images from the shuffled array
-//   return images;
-// }
+function chooseImagesForLayout(arrImages, numOfImages) {
+  const imagesArr = arrImages;
+  const shuffledImagesArr = imagesArr.sort(() => 0.5 - Math.random()); // Shuffle the images
+  const images = shuffledImagesArr.slice(0, numOfImages); // Take the images from the shuffled array
+  const imagesRemaining = imagesArr.filter((image) => !images.includes(image)); // Find the remaining images );
+  return { images, imagesRemaining };
+}
 
 const imgUrlsLength = imageUrls.length;
 const layoutManagement = {
@@ -266,9 +267,15 @@ function Images() {
   let offsetY = getRandomArbitrary(-height / 50, height / 50);
 
   // Create layout register array
-  const layoutRegister = createLayoutRegister(29, layoutManagement);
+  const layoutRegister = createLayoutRegister(imgUrlsLength, layoutManagement);
+  console.log(layoutRegister);
 
-  // Create the layout
+  // Create the layout images
+  const layoutImages = layoutRegister;
+  for (let i; i < layoutImages.length; i++) {
+    let objects = Object.keys(layoutManagement);
+    console.log(objects);
+  }
 
   return (
     <group
