@@ -13,32 +13,55 @@ import {
 const imageUrls = [
   "/img1.jpg",
   "/img6.jpg",
-  "/trip2.jpg",
-  "/img8.jpg",
-  "/trip4.jpg",
-  "/img3.jpg",
-  "/img7.jpg",
+  "/img1.jpg",
+  "/img6.jpg",
+  "/img1.jpg",
+  "/img6.jpg",
+  "/img1.jpg",
+  "/img6.jpg",
+  "/img1.jpg",
+  "/img6.jpg",
+  "/img1.jpg",
+  "/img6.jpg",
+  "/img1.jpg",
+  "/img6.jpg",
+  "/img1.jpg",
+  "/img6.jpg",
 ];
 
 function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function createFirstLayout(width, height) {
-  let offsetX = getRandomArbitrary(-width / 50, width / 50);
-  let offsetY = getRandomArbitrary(-height / 50, height / 50);
-
+function createFirstLayout(width, height, offsetX, offsetY) {
   let x = 0 + offsetX;
   let y = 0 + offsetY;
-  let boxPosition = [x, y, 0];
-  let boxScale = [0.8 * width + offsetX, 0.65 * height + offsetY, 1];
-  return { boxPosition, boxScale };
+
+  let box1Position = [x, y, 0];
+  let box1Scale = [0.8 * width + offsetX, 0.65 * height + offsetY, 1];
+  return {
+    box1: [box1Position, box1Scale],
+  };
 }
 
-function createSecondLayout(width, height) {
-  let offsetX = getRandomArbitrary(-width / 50, width / 50);
-  let offsetY = getRandomArbitrary(-height / 50, height / 50);
+function createSecondLayout(width, height, offsetX, offsetY) {
+  let x1 = 0.22 * width + offsetX;
+  let y1 = 0 + offsetY;
+  let box1Position = [x1, y1, 0];
+  let box1Scale = [0.34 * width + offsetX, 0.8 * height + offsetY, 1];
 
+  let x2 = -0.22 * width + offsetX;
+  let y2 = 0 + offsetY;
+  let box2Position = [x2, y2, 0];
+  let box2Scale = [0.34 * width + offsetX, 0.8 * height + offsetY, 1];
+
+  return {
+    box1: [box1Position, box1Scale],
+    box2: [box2Position, box2Scale],
+  };
+}
+
+function createThirdLayout(width, height, offsetX, offsetY) {
   let x1 = 0 + offsetX;
   let y1 = 0 + offsetY;
   let box1Position = [x1, y1, 0];
@@ -55,19 +78,13 @@ function createSecondLayout(width, height) {
   let box3Scale = [0.2 * width + offsetX, 0.4 * height + offsetY, 1];
 
   return {
-    box1Position,
-    box1Scale,
-    box2Position,
-    box2Scale,
-    box3Position,
-    box3Scale,
+    box1: [box1Position, box1Scale],
+    box2: [box2Position, box2Scale],
+    box3: [box3Position, box3Scale],
   };
 }
 
-function createThirdLayout(width, height) {
-  let offsetX = getRandomArbitrary(-width / 50, width / 50);
-  let offsetY = getRandomArbitrary(-height / 50, height / 50);
-
+function createFourthLayout(width, height, offsetX, offsetY) {
   let x1 = 0 + offsetX;
   let y1 = 0 + offsetY;
   let box1Position = [x1, y1, 0];
@@ -94,23 +111,15 @@ function createThirdLayout(width, height) {
   let box5Scale = [0.15 * width + offsetX, 0.2 * height + offsetY, 1];
 
   return {
-    box1Position,
-    box1Scale,
-    box2Position,
-    box2Scale,
-    box3Position,
-    box3Scale,
-    box4Position,
-    box4Scale,
-    box5Position,
-    box5Scale,
+    box1: [box1Position, box1Scale],
+    box2: [box2Position, box2Scale],
+    box3: [box3Position, box3Scale],
+    box4: [box4Position, box4Scale],
+    box5: [box5Position, box5Scale],
   };
 }
 
-function createFourthLayout(width, height) {
-  let offsetX = getRandomArbitrary(-width / 50, width / 50);
-  let offsetY = getRandomArbitrary(-height / 50, height / 50);
-
+function createFifthLayout(width, height, offsetX, offsetY) {
   let x1 = -width / 5.5 + offsetX;
   let y1 = height / 5 + offsetY;
   let box1Position = [x1, y1, 0];
@@ -142,25 +151,16 @@ function createFourthLayout(width, height) {
   let box6Scale = [0.15 * width + offsetX, 0.22 * height + offsetY, 1];
 
   return {
-    box1Position,
-    box1Scale,
-    box2Position,
-    box2Scale,
-    box3Position,
-    box3Scale,
-    box4Position,
-    box4Scale,
-    box5Position,
-    box5Scale,
-    box6Position,
-    box6Scale,
+    box1: [box1Position, box1Scale],
+    box2: [box2Position, box2Scale],
+    box3: [box3Position, box3Scale],
+    box4: [box4Position, box4Scale],
+    box5: [box5Position, box5Scale],
+    box6: [box6Position, box6Scale],
   };
 }
 
-function createFifthLayout(width, height) {
-  let offsetX = getRandomArbitrary(-width / 50, width / 50);
-  let offsetY = getRandomArbitrary(-height / 50, height / 50);
-
+function createSixthLayout(width, height, offsetX, offsetY) {
   let x1 = -0.375 * width + offsetX;
   let y1 = height / 5 + offsetY;
   let box1Position = [x1, y1, 0];
@@ -202,32 +202,74 @@ function createFifthLayout(width, height) {
   let box8Scale = [0.2 * width + offsetX, 0.45 * height + offsetY, 1];
 
   return {
-    box1Position,
-    box1Scale,
-    box2Position,
-    box2Scale,
-    box3Position,
-    box3Scale,
-    box4Position,
-    box4Scale,
-    box5Position,
-    box5Scale,
-    box6Position,
-    box6Scale,
-    box7Position,
-    box7Scale,
-    box8Position,
-    box8Scale,
+    box1: [box1Position, box1Scale],
+    box2: [box2Position, box2Scale],
+    box3: [box3Position, box3Scale],
+    box4: [box4Position, box4Scale],
+    box5: [box5Position, box5Scale],
+    box6: [box6Position, box6Scale],
+    box7: [box7Position, box7Scale],
+    box8: [box8Position, box8Scale],
   };
 }
 
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+};
+
+function createLayoutRegister(imgUrlsLength, layoutManagement) {
+  let layoutRegister = [];
+  const layoutEntries = Object.entries(layoutManagement); // Convert layoutManagement object to array, [key, value]
+  const layoutArray = layoutEntries.reverse(); // Reverse the layout array so that the layout shows the most images at the top of the array
+
+  // Find the amount of each layout type needed to show all images
+  layoutArray.map(([key, value]) => {
+    while (imgUrlsLength >= value) {
+      imgUrlsLength -= value;
+      layoutRegister.push([key, value]);
+    }
+  });
+  // Shuffle the array layout
+  shuffleArray(layoutRegister);
+  // return Object.fromEntries(layoutRegister);
+  return layoutRegister;
+}
+
+// function chooseImagesForLayout(arrImages, numOfImages) {
+//   const imagesArr = [...arrImages];
+//   const shuffledImagesArr = imagesArr.sort(() => 0.5 - Math.random()); // Shuffle the images
+//   const images = shuffledImagesArr.slice(0, numOfImages); // Take the images from the shuffled array
+//   return images;
+// }
+
+const imgUrlsLength = imageUrls.length;
+const layoutManagement = {
+  firstLayout: 1,
+  secondLayout: 2,
+  thirdLayout: 3,
+  fourthLayout: 5,
+  fifthLayout: 6,
+  sixthLayout: 8,
+};
+
 function Images() {
+  // Take the width and height of the screen
   const { width, height } = useThree((state) => state.viewport);
-  // const firstLayout = createFirstLayout(width, height);
-  // const secondLayout = createSecondLayout(width, height);
-  // const thirdLayout = createThirdLayout(width, height);
-  // const fourthLayout = createFourthLayout(width, height);
-  const fifthLayout = createFifthLayout(width, height);
+
+  // Create a random offset for the position of the images and their scale of them
+  let offsetX = getRandomArbitrary(-width / 50, width / 50);
+  let offsetY = getRandomArbitrary(-height / 50, height / 50);
+
+  // Create layout register array
+  const layoutRegister = createLayoutRegister(29, layoutManagement);
+
+  // Create the layout
+
   return (
     <group
     // ref={group}
@@ -237,46 +279,6 @@ function Images() {
         url={imageUrls[0]}
         scale={firstLayout.boxScale}
       /> */}
-      <Image
-        position={fifthLayout.box1Position}
-        url={imageUrls[0]}
-        scale={fifthLayout.box1Scale}
-      />
-      <Image
-        position={fifthLayout.box2Position}
-        url={imageUrls[0]}
-        scale={fifthLayout.box2Scale}
-      />
-      <Image
-        position={fifthLayout.box3Position}
-        url={imageUrls[0]}
-        scale={fifthLayout.box3Scale}
-      />
-      <Image
-        position={fifthLayout.box4Position}
-        url={imageUrls[0]}
-        scale={fifthLayout.box4Scale}
-      />
-      <Image
-        position={fifthLayout.box5Position}
-        url={imageUrls[0]}
-        scale={fifthLayout.box5Scale}
-      />
-      <Image
-        position={fifthLayout.box6Position}
-        url={imageUrls[0]}
-        scale={fifthLayout.box6Scale}
-      />
-      <Image
-        position={fifthLayout.box7Position}
-        url={imageUrls[0]}
-        scale={fifthLayout.box7Scale}
-      />
-      <Image
-        position={fifthLayout.box8Position}
-        url={imageUrls[0]}
-        scale={fifthLayout.box8Scale}
-      />
     </group>
   );
 }
