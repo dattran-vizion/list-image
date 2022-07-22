@@ -23,6 +23,7 @@ import {
   pickRandomImagesFromURLs,
 } from "./components/AuxiliaryFunction";
 import { createLayoutRegister } from "./components/LayoutRegister";
+import { type } from "@testing-library/user-event/dist/type";
 
 const imageURLs = [
   "/img1.jpg",
@@ -40,14 +41,16 @@ const imageURLs = [
 ];
 
 const imgUrlsLength = imageURLs.length;
-const layoutManagement = {
-  firstLayout: 1,
-  secondLayout: 2,
-  thirdLayout: 3,
-  fourthLayout: 5,
-  fifthLayout: 6,
-  sixthLayout: 8,
-};
+
+const layoutManagement = [
+  ["firstLayout", 1],
+  ["secondLayout", 2],
+  ["thirdLayout", 3],
+  ["fourthLayout", 5],
+  ["fifthLayout", 6],
+  ["sixthLayout", 8],
+];
+
 let copyImageURLs = [...imageURLs];
 
 function Images() {
@@ -60,9 +63,8 @@ function Images() {
 
   // Create layout register array
   const layoutRegister = createLayoutRegister(imgUrlsLength, layoutManagement);
-  // console.log(layoutRegister);
 
-  // Create the layout images
+  // Create the layout list
   const layoutList = layoutRegister.map(([key, value]) => {
     let images = pickRandomImagesFromURLs(copyImageURLs, value);
     switch (key) {
@@ -99,29 +101,14 @@ function Images() {
     }
   });
 
-  // const listLayoutRender = layoutList.map((item, index) => {
-  //   const images = item.images;
-  //   const layout = Object.values(item.layout);
-  //   return { images, layout };
-  // });
+  
 
-  const images = layoutList[0].images;
-  const firstLayout = Object.values(layoutList[0].layout);
-
-  return (
-    <group>
-      {images.map((image, index) => (
-        <Image
-          key={index}
-          url={image}
-          position={firstLayout[index][0]}
-          // position={Math.random()}
-          scale={firstLayout[index][1]}
-          // scale={Math.random()}
-        />
-      ))}
-    </group>
-  );
+  // console.log(layoutList);
+  // const imagesEachSilde = layoutList.map((element) => element.images);
+  // const layoutEachSilde = layoutList.map((element) => element.layout);
+  // console.log(imagesEachSilde);
+  // console.log(layoutEachSilde);
+  return <group></group>;
 }
 
 export default function App() {
