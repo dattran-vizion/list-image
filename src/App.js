@@ -23,7 +23,6 @@ import {
   pickRandomImagesFromURLs,
 } from "./components/AuxiliaryFunction";
 import { createLayoutRegister } from "./components/LayoutRegister";
-import { type } from "@testing-library/user-event/dist/type";
 
 const imageURLs = [
   "/img1.jpg",
@@ -41,16 +40,14 @@ const imageURLs = [
 ];
 
 const imgUrlsLength = imageURLs.length;
-
-const layoutManagement = [
-  ["firstLayout", 1],
-  ["secondLayout", 2],
-  ["thirdLayout", 3],
-  ["fourthLayout", 5],
-  ["fifthLayout", 6],
-  ["sixthLayout", 8],
-];
-
+const layoutManagement = {
+  firstLayout: 1,
+  secondLayout: 2,
+  thirdLayout: 3,
+  fourthLayout: 5,
+  fifthLayout: 6,
+  sixthLayout: 8,
+};
 let copyImageURLs = [...imageURLs];
 
 function Images() {
@@ -58,13 +55,13 @@ function Images() {
   const { width, height } = useThree((state) => state.viewport);
 
   // Create a random offset for the position of the images and their scale of them
-  let offsetX = getRandomArbitrary(-width / 50, width / 50);
-  let offsetY = getRandomArbitrary(-height / 50, height / 50);
+  let offsetX = getRandomArbitrary(-width / 75, width / 75);
+  let offsetY = getRandomArbitrary(-height / 75, height / 75);
 
   // Create layout register array
   const layoutRegister = createLayoutRegister(imgUrlsLength, layoutManagement);
 
-  // Create the layout list
+  // Create the layout images. Example: Layout 1 has 1 iamges, Layout 2 has 2 images, etc.
   const layoutList = layoutRegister.map(([key, value]) => {
     let images = pickRandomImagesFromURLs(copyImageURLs, value);
     switch (key) {
@@ -101,21 +98,36 @@ function Images() {
     }
   });
 
-  
-
-  // console.log(layoutList);
-  // const imagesEachSilde = layoutList.map((element) => element.images);
-  // const layoutEachSilde = layoutList.map((element) => element.layout);
-  // console.log(imagesEachSilde);
-  // console.log(layoutEachSilde);
-  return <group></group>;
+  return (
+    <group>
+      {layoutList.map(({ images, layout }, index) => {
+        let layoutValues = Object.values(layout);
+        return (
+          <group key={Math.random()}>
+            {images.map((image, keyid) => {
+              let [x, y, z] = layoutValues[keyid][0];
+              let scale = layoutValues[keyid][1];
+              return (
+                <Image
+                  key={keyid}
+                  url={image}
+                  position={[x, y - index * height, z]}
+                  scale={scale}
+                />
+              );
+            })}
+          </group>
+        );
+      })}
+    </group>
+  );
 }
 
 export default function App() {
   return (
     <Canvas gl={{ antialias: false }} dpr={[1, 1.5]}>
       <Suspense fallback={null}>
-        <ScrollControls damping={4} pages={3}>
+        <ScrollControls damping={4} pages={5}>
           <Scroll>
             <Images />
           </Scroll>
