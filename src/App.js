@@ -50,11 +50,11 @@ function Images() {
   let copyImageURLs = [...sourceImageURLs];
   // console.log("render time", copyImageURLs.length);
   // Take the width and height of the screen
-  const { widthScreen, heightScreen } = useThree((state) => state.viewport);
+  const { width, height } = useThree((state) => state.viewport);
 
   // Create a random offset for the position of the images and their scale of them
-  let offsetX = getRandomArbitrary(-widthScreen / 75, widthScreen / 75);
-  let offsetY = getRandomArbitrary(-heightScreen / 75, heightScreen / 75);
+  let offsetX = getRandomArbitrary(-width / 75, width / 75);
+  let offsetY = getRandomArbitrary(-height / 75, height / 75);
 
   // Create layout register array
   const layoutsRegister = createLayoutRegister(
@@ -71,48 +71,48 @@ function Images() {
     switch (layoutName) {
       case "oneImageLayout":
         const oneImageLayout = createOneImageLayout(
-          widthScreen,
-          heightScreen,
+          width,
+          height,
           offsetX,
           offsetY
         );
         return { images, layout: oneImageLayout };
       case "twoImagesLayout":
         const twoImagesLayout = createTwoImagesLayout(
-          widthScreen,
-          heightScreen,
+          width,
+          height,
           offsetX,
           offsetY
         );
         return { images, layout: twoImagesLayout };
       case "threeImagesLayout":
         const threeImagesLayout = createThreeImagesLayout(
-          widthScreen,
-          heightScreen,
+          width,
+          height,
           offsetX,
           offsetY
         );
         return { images, layout: threeImagesLayout };
       case "fiveImagesLayout":
         const fiveImagesLayout = createFiveImagesLayout(
-          widthScreen,
-          heightScreen,
+          width,
+          height,
           offsetX,
           offsetY
         );
         return { images, layout: fiveImagesLayout };
       case "sixImagesLayout":
         const sixImagesLayout = createSixImagesLayout(
-          widthScreen,
-          heightScreen,
+          width,
+          height,
           offsetX,
           offsetY
         );
         return { images, layout: sixImagesLayout };
       case "eightImagesLayout":
         const eightImagesLayout = createEightImagesLayout(
-          widthScreen,
-          heightScreen,
+          width,
+          height,
           offsetX,
           offsetY
         );
@@ -135,7 +135,7 @@ function Images() {
                 <Image
                   key={subIndex}
                   url={image}
-                  position={[x, y - index * heightScreen, z]}
+                  position={[x, y - index * height, z]}
                   scale={scale}
                 />
               );
