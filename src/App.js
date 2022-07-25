@@ -11,20 +11,17 @@ import {
 // import { AxesHelper } from "three";
 
 import {
-  createFirstLayout,
-  createSecondLayout,
-  createThirdLayout,
-  createFourthLayout,
-  createFifthLayout,
-  createSixthLayout,
+  createOneImageLayout,
+  createTwoImagesLayout,
+  createThreeImagesLayout,
+  createFiveImagesLayout,
+  createSixImagesLayout,
+  createEightImagesLayout,
 } from "./components/CreateLayout";
-import {
-  getRandomArbitrary,
-  pickRandomImagesFromURLs,
-} from "./components/AuxiliaryFunction";
+import { getRandomArbitrary } from "./components/AuxiliaryFunction";
 import { createLayoutRegister } from "./components/LayoutRegister";
 
-const imageURLs = [
+const sourceImageURLs = [
   "/img1.jpg",
   "/img2.jpg",
   "/img3.jpg",
@@ -33,68 +30,95 @@ const imageURLs = [
   "/img6.jpg",
   "/img7.jpg",
   "/img8.jpg",
-  "/trip1.jpg",
-  "/trip2.jpg",
-  "/trip3.jpg",
-  "/trip4.jpg",
+  "/img9.jpg",
+  "/img10.jpg",
+  "/img11.jpg",
+  "/img12.jpg",
 ];
 
-const imgUrlsLength = imageURLs.length;
+const sourceImgLength = sourceImageURLs.length;
 const layoutManagement = {
-  firstLayout: 1,
-  secondLayout: 2,
-  thirdLayout: 3,
-  fourthLayout: 5,
-  fifthLayout: 6,
-  sixthLayout: 8,
+  oneImageLayout: 1,
+  twoImagesLayout: 2,
+  threeImagesLayout: 3,
+  fiveImagesLayout: 5,
+  sixImagesLayout: 6,
+  eightImagesLayout: 8,
 };
-let copyImageURLs = [...imageURLs];
 
 function Images() {
+  let copyImageURLs = [...sourceImageURLs];
+  // console.log("render time", copyImageURLs.length);
   // Take the width and height of the screen
-  const { width, height } = useThree((state) => state.viewport);
+  const { widthScreen, heightScreen } = useThree((state) => state.viewport);
 
   // Create a random offset for the position of the images and their scale of them
-  let offsetX = getRandomArbitrary(-width / 75, width / 75);
-  let offsetY = getRandomArbitrary(-height / 75, height / 75);
+  let offsetX = getRandomArbitrary(-widthScreen / 75, widthScreen / 75);
+  let offsetY = getRandomArbitrary(-heightScreen / 75, heightScreen / 75);
 
   // Create layout register array
-  const layoutRegister = createLayoutRegister(imgUrlsLength, layoutManagement);
+  const layoutsRegister = createLayoutRegister(
+    sourceImgLength,
+    layoutManagement
+  );
 
   // Create the layout images. Example: Layout 1 has 1 iamges, Layout 2 has 2 images, etc.
-  const layoutList = layoutRegister.map(([key, value]) => {
-    let images = pickRandomImagesFromURLs(copyImageURLs, value);
-    switch (key) {
-      case "firstLayout":
-        const firstLayout = createFirstLayout(width, height, offsetX, offsetY);
-        return { images, layout: firstLayout };
-      case "secondLayout":
-        const secondLayout = createSecondLayout(
-          width,
-          height,
+  const layoutList = layoutsRegister.map(([layoutName, numOfImgInLayout]) => {
+    let images = copyImageURLs
+      .sort(() => 0.5 - Math.random())
+      .slice(0, numOfImgInLayout);
+    copyImageURLs = copyImageURLs.filter((image) => !images.includes(image));
+    switch (layoutName) {
+      case "oneImageLayout":
+        const oneImageLayout = createOneImageLayout(
+          widthScreen,
+          heightScreen,
           offsetX,
           offsetY
         );
-        return { images, layout: secondLayout };
-      case "thirdLayout":
-        const thirdLayout = createThirdLayout(width, height, offsetX, offsetY);
-        return { images, layout: thirdLayout };
-      case "fourthLayout":
-        const fourthLayout = createFourthLayout(
-          width,
-          height,
+        return { images, layout: oneImageLayout };
+      case "twoImagesLayout":
+        const twoImagesLayout = createTwoImagesLayout(
+          widthScreen,
+          heightScreen,
           offsetX,
           offsetY
         );
-        return { images, layout: fourthLayout };
-      case "fifthLayout":
-        const fifthLayout = createFifthLayout(width, height, offsetX, offsetY);
-        return { images, layout: fifthLayout };
-      case "sixthLayout":
-        const sixthLayout = createSixthLayout(width, height, offsetX, offsetY);
-        return { images, layout: sixthLayout };
+        return { images, layout: twoImagesLayout };
+      case "threeImagesLayout":
+        const threeImagesLayout = createThreeImagesLayout(
+          widthScreen,
+          heightScreen,
+          offsetX,
+          offsetY
+        );
+        return { images, layout: threeImagesLayout };
+      case "fiveImagesLayout":
+        const fiveImagesLayout = createFiveImagesLayout(
+          widthScreen,
+          heightScreen,
+          offsetX,
+          offsetY
+        );
+        return { images, layout: fiveImagesLayout };
+      case "sixImagesLayout":
+        const sixImagesLayout = createSixImagesLayout(
+          widthScreen,
+          heightScreen,
+          offsetX,
+          offsetY
+        );
+        return { images, layout: sixImagesLayout };
+      case "eightImagesLayout":
+        const eightImagesLayout = createEightImagesLayout(
+          widthScreen,
+          heightScreen,
+          offsetX,
+          offsetY
+        );
+        return { images, layout: eightImagesLayout };
       default:
-        return { images: undefined, layout: [] };
+        return null;
     }
   });
 
@@ -103,15 +127,15 @@ function Images() {
       {layoutList.map(({ images, layout }, index) => {
         let layoutValues = Object.values(layout);
         return (
-          <group key={Math.random()}>
-            {images.map((image, keyid) => {
-              let [x, y, z] = layoutValues[keyid][0];
-              let scale = layoutValues[keyid][1];
+          <group key={index}>
+            {images.map((image, subIndex) => {
+              let [x, y, z] = layoutValues[subIndex][0];
+              let scale = layoutValues[subIndex][1];
               return (
                 <Image
-                  key={keyid}
+                  key={subIndex}
                   url={image}
-                  position={[x, y - index * height, z]}
+                  position={[x, y - index * heightScreen, z]}
                   scale={scale}
                 />
               );
